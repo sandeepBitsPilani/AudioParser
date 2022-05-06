@@ -39,6 +39,20 @@ typedef struct {
 
 } WAVData;
 
+/* AIFF by default only supports uncompressed PCM data...*/
+typedef struct {
+	/* FORM */
+	char chunkID[4]; //"FORM" - always for audio IFF
+	long chunksize; //Total size of the next two portions of the chunk
+	char formType[4]; //"AIFF" - always for audio IFF
+
+} AIFFData;
+
+WAVData* makeWAVStructWithFile (FILE *file);
+void makeAIFFStructWithFile (FILE *file);
+void loadSpecificFile (void);
+void loadSample (void);
+void exportWAVSoundDataWithFileName(WAVData *wav, char fileName[]);
 
 int main() {
 	printf("Load the sample WAV file (audio.wav) or load your own?\n('1' for sample, '2' for other)\n");
