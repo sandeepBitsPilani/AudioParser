@@ -67,3 +67,17 @@ int main() {
 	}
 	printf("This is test comment 1");
 }
+
+void loadSample(void) {
+	char fileName[] = "audio.wav";
+	FILE *file = fopen(fileName, "r");
+	if (file == NULL)
+	{
+		printf("%s not found\n", fileName);
+		exit(1);
+	}
+	printf("%s\n----------\n", fileName);
+
+	WAVData *wav = makeWAVStructWithFile(file);
+	exportWAVSoundDataWithFileName(wav, fileName);
+}
