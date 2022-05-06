@@ -81,3 +81,46 @@ void loadSample(void) {
 	WAVData *wav = makeWAVStructWithFile(file);
 	exportWAVSoundDataWithFileName(wav, fileName);
 }
+
+
+void loadSpecificFile(void) {
+	printf("What's the WAV file name? (80 charcters max, include)\n");
+	char fileName[80];
+	scanf("%s", fileName);
+
+	FILE *file = fopen(fileName, "r");
+	if (file == NULL) {
+		printf("%s could not be found\n", fileName);
+		exit(1);
+	}
+
+	WAVData *wav = makeWAVStructWithFile(file);
+	exportWAVSoundDataWithFileName(wav, fileName);
+}
+
+WAVData* makeWAVStructWithFile(FILE *file) {
+	WAVData *wav = malloc(sizeof(WAVData));
+	fread(wav, sizeof(WAVData), 1, file);
+	//printf("%s\n",wav.type);
+	printf("Size: %d bytes\n", wav->chunksize1 + 8);
+	printf("Type: %s\n", wav->format);
+	// //printf("%s\n",wav.subchuck1ID);
+	printf("Data Info Size: %d bytes\n", wav->subchunk1Size);
+	printf("Compression code: %d", wav->audioFormat);
+	if (wav->audioFormat == 1) {
+		printf(" (PCM / uncompressed)\n");
+	} else {
+		printf("\n");
+	}
+	printf("Number of Channels: %d\n", wav->numChannels);
+	printf("Sample Rate: %d Hz\n", wav->sampleRate);
+	printf("Bytes Per Second: %d bytes\n", wav->byteRate);
+	//printf("%d\n",wav.blockAlign);
+	//printf("%d\n\n",wav.bitsPerSample);
+
+	//printf("data\n");
+	//printf("%s\n",wav.subchuck2ID);
+	printf("Data Size: %d bytes\n", wav->subchunk2Size);
+
+	return wav;
+}
