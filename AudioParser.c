@@ -64,6 +64,7 @@ int main() {
 	}else if (fileSourceDecision == 2) {
 		loadSpecificFile();
 	}
+	printf("This is test comment 1");
 }
 
 void loadSample(void) {
