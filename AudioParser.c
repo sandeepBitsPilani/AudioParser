@@ -16,6 +16,30 @@
  * WAV follows a RIFF data structure where there are 3 chunks.
  */
 
+typedef struct {
+	/* header */
+   char type[4]; // Always "RIFF"
+   int chunksize1; //The size of the rest of the file, so file size minus 8 bytes
+   char format[4]; //"WAVE" - always for WAV
+
+    /* fmt - sound data's format */
+    char subchuck1ID[4]; //"fmt "
+    int subchunk1Size; //Size of the rest of this subchunk - 16 for PCM
+    unsigned short int audioFormat; //form of compression, PCM/uncompressed = 1
+    unsigned short int numChannels; //Mono = 1, stereo = 2
+    int sampleRate; //Number of audio samples per second. 44100 most likely
+    int byteRate; // Bytes per second: SampleRate * NumChannels * BitsPerSample/8
+    unsigned short int blockAlign; // NumChannels * BitsPerSample/8
+    unsigned short int bitsPerSample; //The number should be aligned (multiple of 8)
+
+    /* sound data chunk*/
+    char subchuck2ID[4]; // "data"
+    int subchunk2Size; // Size of the actual sound data
+    unsigned char data[MAX_FILE_SIZE_IN_BYTES]; // Actual sound data
+
+} WAVData;
+
+
 int main() {
 	printf("Load the sample WAV file (audio.wav) or load your own?\n('1' for sample, '2' for other)\n");
 	int fileSourceDecision;
