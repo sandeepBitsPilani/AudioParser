@@ -124,3 +124,32 @@ WAVData* makeWAVStructWithFile(FILE *file) {
 
 	return wav;
 }
+
+
+void makeAIFFStructWithFile(FILE *file) {
+	AIFFData aiff;
+	fread(&aiff, sizeof(AIFFData),1, file);
+	printf("%s\n", aiff.chunkID);
+	printf("%ld", aiff.chunksize);
+}
+
+/* Exports the audio sample data to a txt file */
+void exportWAVSoundDataWithFileName(WAVData *wav, char fileName[]) {
+	char fileNameWithoutExtension[80];
+	memcpy(fileNameWithoutExtension, &fileName[0], (strlen(fileName)-4));
+	char textFileNameBuffer[80];
+	sprintf(textFileNameBuffer, "%s.txt",fileName);
+	FILE *f = fopen(textFileNameBuffer, "w");
+	if (f == NULL) {
+    	printf("Error creating file!\n");
+    	exit(1);
+	}
+	int i;
+	/* Each data value will be separated by a \n */
+	for (i = 0; i < wav->subchunk2Size; i++){
+		fprintf(f, "%d\n", wav->data[i]);
+	}
+	fclose(f);
+	printf("----------\n");
+	printf("The digital audio sample data has been exported to %s\n", textFileNameBuffer);
+} 
