@@ -2,9 +2,6 @@
 #include <stdio.h>
 #include <string.h>
 
-/* Reference for the wav file format: https://ccrma.stanford.edu/courses/422/projects/WaveFormat/ */
-/* Reference for aiff file format: http://www-mmsp.ece.mcgill.ca/Documents/AudioFormats/AIFF/Docs/AIFF-1.3.pdf */
-
 /* 
  * Size Reference:
  *
